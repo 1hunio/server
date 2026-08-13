@@ -131,7 +131,7 @@ class ConfigAPI extends AbstractModelAPI {
         'type'       => 'object',
         'title'      => ucfirst($item),
         'properties' => [
-          'configSectionId' => ['type' => 'integer'],
+          'configSectionId' => ['type' => 'string'],
           'item'            => ['type' => 'string', 'const' => $item],
           'value'           => ['oneOf' => $valueEnum],
         ],
@@ -142,7 +142,7 @@ class ConfigAPI extends AbstractModelAPI {
       'type'       => 'object',
       'title'      => 'ConfigGeneric',
       'properties' => [
-        'configSectionId' => ['type' => 'integer'],
+        'configSectionId' => ['type' => 'string'],
         'item'            => ['type' => 'string'],
         'value'           => ['type' => 'string'],
       ],
