@@ -1561,8 +1561,9 @@
                             ],
                             "properties": {
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 },
                                 "type": {
                                     "type": "string",
@@ -1603,8 +1604,9 @@
                             ],
                             "properties": {
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 },
                                 "type": {
                                     "type": "string",
@@ -1667,8 +1669,9 @@
                         ],
                         "properties": {
                             "id": {
-                                "type": "integer",
-                                "example": 1
+                                "type": "string",
+                                "pattern": "^[0-9]+$",
+                                "example": "1"
                             },
                             "type": {
                                 "type": "string",
@@ -1748,8 +1751,9 @@
                                                             "const": "crackerBinary"
                                                         },
                                                         "id": {
-                                                            "type": "integer",
-                                                            "example": 1
+                                                            "type": "string",
+                                                            "pattern": "^[0-9]+$",
+                                                            "example": "1"
                                                         }
                                                     }
                                                 }
@@ -1793,8 +1797,9 @@
                                                             "const": "task"
                                                         },
                                                         "id": {
-                                                            "type": "integer",
-                                                            "example": 1
+                                                            "type": "string",
+                                                            "pattern": "^[0-9]+$",
+                                                            "example": "1"
                                                         }
                                                     }
                                                 }
@@ -1818,8 +1823,9 @@
                                     ],
                                     "properties": {
                                         "id": {
-                                            "type": "integer",
-                                            "example": 1
+                                            "type": "string",
+                                            "pattern": "^[0-9]+$",
+                                            "example": "1"
                                         },
                                         "type": {
                                             "type": "string",
@@ -1859,8 +1865,9 @@
                                     ],
                                     "properties": {
                                         "id": {
-                                            "type": "integer",
-                                            "example": 1
+                                            "type": "string",
+                                            "pattern": "^[0-9]+$",
+                                            "example": "1"
                                         },
                                         "type": {
                                             "type": "string",
@@ -2094,8 +2101,9 @@
                             ],
                             "properties": {
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 },
                                 "type": {
                                     "type": "string",
@@ -2175,8 +2183,9 @@
                                                                 "const": "crackerBinary"
                                                             },
                                                             "id": {
-                                                                "type": "integer",
-                                                                "example": 1
+                                                                "type": "string",
+                                                                "pattern": "^[0-9]+$",
+                                                                "example": "1"
                                                             }
                                                         }
                                                     }
@@ -2220,8 +2229,9 @@
                                                                 "const": "task"
                                                             },
                                                             "id": {
-                                                                "type": "integer",
-                                                                "example": 1
+                                                                "type": "string",
+                                                                "pattern": "^[0-9]+$",
+                                                                "example": "1"
                                                             }
                                                         }
                                                     }
@@ -2246,8 +2256,9 @@
                                     ],
                                     "properties": {
                                         "id": {
-                                            "type": "integer",
-                                            "example": 1
+                                            "type": "string",
+                                            "pattern": "^[0-9]+$",
+                                            "example": "1"
                                         },
                                         "type": {
                                             "type": "string",
@@ -2287,8 +2298,9 @@
                                     ],
                                     "properties": {
                                         "id": {
-                                            "type": "integer",
-                                            "example": 1
+                                            "type": "string",
+                                            "pattern": "^[0-9]+$",
+                                            "example": "1"
                                         },
                                         "type": {
                                             "type": "string",
@@ -2488,8 +2500,9 @@
                                     "const": "crackerVersions"
                                 },
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 }
                             }
                         }
@@ -2516,8 +2529,9 @@
                                     "const": "crackerVersions"
                                 },
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 }
                             }
                         }
@@ -2544,8 +2558,9 @@
                                     "const": "tasks"
                                 },
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 }
                             }
                         }
@@ -2572,8 +2587,9 @@
                                     "const": "tasks"
                                 },
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 }
                             }
                         }

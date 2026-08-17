@@ -14,32 +14,6 @@ description: >
 extends:
   - ./spectral-jsonapi.yml
 
-# Spectral does not inherit the aliases of an extended ruleset, so the aliases
-# used by the re-scoped rules below are copied verbatim from spectral-jsonapi.yml.
-aliases:
-  AllContentSchemas:
-    - "$.paths..content['application/vnd.api+json'].schema"
-
-  ResourceObjects:
-    - "$.paths..responses..content[application/vnd.api+json].schema.properties.data.properties"
-    - "$.paths..responses..content[application/vnd.api+json].schema.properties.data.allOf[*].properties"
-    - "$.paths..responses..content[application/vnd.api+json].schema.properties.data.items.properties"
-    - "$.paths..responses..content[application/vnd.api+json].schema.properties.data.items.allOf[*].properties"
-    - "$.paths..content[application/vnd.api+json].schema.properties.included.items.properties"
-    - "$.paths..content[application/vnd.api+json].schema.properties.included.items.allOf[*].properties"
-    - "$.paths..patch.requestBody.content[application/vnd.api+json].schema.properties.data.properties"
-    - "$.paths..patch.requestBody.content[application/vnd.api+json].schema.properties.data.allOf[*].properties"
-
-  POSTResourceObjects:
-    - "$.paths..post.requestBody.content[application/vnd.api+json].schema.properties.data.properties"
-    - "$.paths..post.requestBody.content[application/vnd.api+json].schema.properties.data.allOf[*].properties"
-
-  Relationships:
-    - "#AllContentSchemas..properties[relationships]"
-
-  RelationshipData:
-    - "#Relationships..data"
-
 rules:
   # The APIv2 never inspects the Accept header, so it cannot answer 406. There is
   # no content negotiation middleware in src/inc/apiv2 at all, so there is no
@@ -69,65 +43,6 @@ rules:
       functionOptions:
         values:
           - object
-
-  # AbstractBaseAPI::obj2Resource answers the primary key of the model as the
-  # integer it is in the database, so the spec describes an id as an integer and
-  # the "id" half of the rule cannot hold. The "type" half is kept by dropping
-  # #ResourceObjects.id from the given. Restore the upstream given once the
-  # runtime serializes an id as the string JSON:API asks for.
-  resource-object-property-types:
-    description: "`type` MUST be of type `string`. The `id` is excluded: obj2Resource answers the
-      integer primary key of the model."
-    documentationUrl: "https://jsonapi.org/format/1.0/#document-resource-object-identification"
-    message: "'type' MUST be of type 'string'"
-    severity: error
-    given:
-      - "#ResourceObjects.type"
-      - "#POSTResourceObjects.type"
-    then:
-      field: type
-      function: enumeration
-      functionOptions:
-        values:
-          - string
-
-  # Same deviation in the resource linkage of a relationship, which carries the
-  # id of the related object (AbstractBaseAPI::obj2Resource). The schema below
-  # is the upstream one without its "id" clause, so the type and meta members
-  # are still checked.
-  relationship-data-schema:
-    description: "relationship data items MUST follow schema. The `id` is excluded: obj2Resource
-      answers the integer primary key of the related model."
-    documentationUrl: "https://jsonapi.org/format/1.0/#document-resource-identifier-objects"
-    message: "relationship data items MUST follow schema"
-    severity: error
-    given:
-      - "#RelationshipData.properties"
-      - "#RelationshipData.allOf[0].properties"
-      - "#RelationshipData.items.properties"
-      - "#RelationshipData.items.allOf[0].properties"
-    then:
-      function: schema
-      functionOptions:
-        dialect: "draft2020-12"
-        schema:
-          type: object
-          required: ["id", "type"]
-          properties:
-            type:
-              type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - string
-            meta:
-              type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - object
 
   # Two deviations are folded into this rule:
   #   - Errors are RFC 7807 problem documents served as application/problem+json

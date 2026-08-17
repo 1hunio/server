@@ -170,14 +170,14 @@ final class FullSpecTest extends TestCase {
   }
 
   /**
-   * obj2Resource answers the primary key of the model as it comes from the
-   * database, so every id is described as an integer. Covers resource objects,
+   * JSON:API requires resource ids to be strings, and obj2Resource casts them,
+   * so no schema may describe an id as an integer. Covers resource objects,
    * relationship linkage, included resources and the write envelopes at once.
    */
-  public function testEveryResourceIdIsDeclaredAsTheRuntimeAnswersIt(): void {
+  public function testEveryResourceIdIsDeclaredAsString(): void {
     $offenders = [];
     $this->collectIdSchemas(self::$sanitized['components']['schemas'], '', $offenders);
-    $this->assertSame([], $offenders, 'Resource ids must be declared as integer');
+    $this->assertSame([], $offenders, 'Resource ids must be declared as string');
   }
 
   private function collectIdSchemas(array $node, string $path, array &$offenders): void {
@@ -190,7 +190,7 @@ final class FullSpecTest extends TestCase {
        * that pairing is what distinguishes it from an "id" attribute of a model.
        */
       if ($key === 'properties' && isset($value['id']['type'], $value['type']['const'])) {
-        if ($value['id']['type'] !== 'integer') {
+        if ($value['id']['type'] !== 'string') {
           $offenders[] = "$path.id declares {$value['id']['type']}";
         }
       }

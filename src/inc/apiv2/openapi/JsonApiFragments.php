@@ -19,14 +19,14 @@ class JsonApiFragments {
 
   /**
    * The id of a resource object or resource identifier object. JSON:API requires
-   * it to be a string, but AbstractBaseAPI::obj2Resource answers the integer
-   * primary key of the model, so that is what the spec describes. The string
-   * form is documented once the runtime serializes it as one.
+   * it to be a string, so AbstractBaseAPI::obj2Resource casts the integer
+   * primary key of the model on the way out.
    */
   public function resourceIdSchema(): array {
     return [
-      "type" => "integer",
-      "example" => 1
+      "type" => "string",
+      "pattern" => '^[0-9]+$',
+      "example" => "1"
     ];
   }
 

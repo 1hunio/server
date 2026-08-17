@@ -1586,8 +1586,9 @@
                             ],
                             "properties": {
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 },
                                 "type": {
                                     "type": "string",
@@ -1625,8 +1626,9 @@
                             ],
                             "properties": {
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 },
                                 "type": {
                                     "type": "string",
@@ -1689,8 +1691,9 @@
                         ],
                         "properties": {
                             "id": {
-                                "type": "integer",
-                                "example": 1
+                                "type": "string",
+                                "pattern": "^[0-9]+$",
+                                "example": "1"
                             },
                             "type": {
                                 "type": "string",
@@ -1944,8 +1947,9 @@
                                                                 "const": "configSection"
                                                             },
                                                             "id": {
-                                                                "type": "integer",
-                                                                "example": 1
+                                                                "type": "string",
+                                                                "pattern": "^[0-9]+$",
+                                                                "example": "1"
                                                             }
                                                         }
                                                     },
@@ -1971,8 +1975,9 @@
                             ],
                             "properties": {
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 },
                                 "type": {
                                     "type": "string",
@@ -2103,8 +2108,9 @@
                             ],
                             "properties": {
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 },
                                 "type": {
                                     "type": "string",
@@ -2358,8 +2364,9 @@
                                                                     "const": "configSection"
                                                                 },
                                                                 "id": {
-                                                                    "type": "integer",
-                                                                    "example": 1
+                                                                    "type": "string",
+                                                                    "pattern": "^[0-9]+$",
+                                                                    "example": "1"
                                                                 }
                                                             }
                                                         },
@@ -2386,8 +2393,9 @@
                             ],
                             "properties": {
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 },
                                 "type": {
                                     "type": "string",
@@ -2482,8 +2490,9 @@
                                 "const": "configSection"
                             },
                             "id": {
-                                "type": "integer",
-                                "example": 1
+                                "type": "string",
+                                "pattern": "^[0-9]+$",
+                                "example": "1"
                             }
                         }
                     }
@@ -2507,8 +2516,9 @@
                                 "const": "configSection"
                             },
                             "id": {
-                                "type": "integer",
-                                "example": 1
+                                "type": "string",
+                                "pattern": "^[0-9]+$",
+                                "example": "1"
                             }
                         }
                     }
@@ -2592,8 +2602,9 @@
                             ],
                             "properties": {
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 },
                                 "type": {
                                     "type": "string",
@@ -2628,8 +2639,9 @@
                             ],
                             "properties": {
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 },
                                 "type": {
                                     "type": "string",
@@ -2691,8 +2703,9 @@
                         ],
                         "properties": {
                             "id": {
-                                "type": "integer",
-                                "example": 1
+                                "type": "string",
+                                "pattern": "^[0-9]+$",
+                                "example": "1"
                             },
                             "type": {
                                 "type": "string",
@@ -2833,8 +2846,9 @@
                             ],
                             "properties": {
                                 "id": {
-                                    "type": "integer",
-                                    "example": 1
+                                    "type": "string",
+                                    "pattern": "^[0-9]+$",
+                                    "example": "1"
                                 },
                                 "type": {
                                     "type": "string",
