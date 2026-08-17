@@ -223,22 +223,6 @@ class ConfigUtils {
   }
   
   /**
-   * @param array $arr id => [attributes]
-   * @throws HTException
-   * @throws Exception
-   *
-   *  This is a new updateConfigs function that unlike the updateConfig is compliant
-   *  for the APIv2
-   */
-  public static function updateConfigs(array $arr): void {
-    foreach ($arr as $id => $attributes) {
-      self::updateSingleConfig($id, $attributes);
-    }
-    
-    SConfig::reload();
-  }
-  
-  /**
    * @param array $arr
    * @throws HTException
    * @throws Exception
