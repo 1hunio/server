@@ -11,6 +11,12 @@ description: >
   A rule is re-scoped wherever part of it still holds, and only switched off
   where the behaviour it describes is absent altogether.
 
+  Note that post-409-response and patch-409-response of the upstream ruleset
+  contradict its own post-409-response-code and patch-409-response-code: the
+  first pair requires that no 409 response is documented, the second that one
+  is. They are reported at severity "info", so they are visible without failing
+  the lint, which runs with the default fail severity of "error".
+
 extends:
   - ./spectral-jsonapi.yml
 
@@ -44,14 +50,21 @@ rules:
         values:
           - object
 
-  # Helper request bodies are flat maps of form fields read by
-  # AbstractHelperAPI::processPost, not JSON:API documents, so request bodies are
-  # only checked under /api/v2/ui/. Responses are checked everywhere, errors
-  # included: ErrorHandler::errorResponse answers JSON:API error documents.
+  # Two deviations are folded into this rule:
+  #   - Helper request bodies are flat maps of form fields read by
+  #     AbstractHelperAPI::processPost, not JSON:API documents, so request bodies
+  #     are only checked under /api/v2/ui/. Responses are checked everywhere,
+  #     errors included: ErrorHandler::errorResponse answers JSON:API error
+  #     documents.
+  #   - Upstream forbids media type parameters, which JSON:API 1.0 did. JSON:API
+  #     1.1 requires the "ext" parameter to name the extensions a document
+  #     applies, so the media type of the atomic operations endpoint
+  #     (AbstractModelAPI::atomicOperations) is allowed as well.
   content-type:
-    description: "JSON:API payloads MUST use the `application/vnd.api+json` media type."
-    documentationUrl: "https://jsonapi.org/format/1.0/#content-negotiation"
-    message: "content MUST be 'application/vnd.api+json'"
+    description: "JSON:API payloads MUST use the `application/vnd.api+json` media type, with the
+      `ext` parameter naming the extension when one is applied."
+    documentationUrl: "https://jsonapi.org/format/1.1/#extension-negotiation"
+    message: "content MUST be 'application/vnd.api+json', optionally with the 'ext' parameter of an applied extension"
     severity: error
     given:
       - "$.paths[?(@property.match(/^\\/api\\/v2\\/ui\\//))]..requestBody.content"
@@ -62,6 +75,7 @@ rules:
       functionOptions:
         values:
           - application/vnd.api+json
+          - application/vnd.api+json;ext="https://jsonapi.org/ext/atomic"
 
   # The rules below only hold for the JSON:API resource routes under
   # /api/v2/ui/. The routes under /api/v2/helper/ are RPC style actions and file
@@ -124,12 +138,21 @@ rules:
       field: "404"
       function: truthy
 
-  # A collection level PATCH updates many objects in one request
-  # (AbstractModelAPI::patchMultiple), which JSON:API 1.0 does not describe. The
-  # rule assumes every PATCH body holds exactly one resource object, so it cannot
-  # hold for a route whose body is a list. Restored once several objects are
-  # updated through an operations document instead.
-  patch-requests-single-object: off
+  # Upstream applies this to every PATCH body, but a PATCH of a to-many
+  # relationship link MUST carry an array of resource identifiers, so the rule
+  # only holds for the resource routes, exactly like post-requests-single-object
+  # below. Several objects are updated in one request through the atomic
+  # operations endpoint (AbstractModelAPI::atomicOperations), whose body is an
+  # operations document and not a resource object.
+  patch-requests-single-object:
+    description: "A `PATCH` MUST carry a single resource object. Relationship routes are excluded:
+      patching a to-many relationship carries an array of resource identifier objects."
+    documentationUrl: "https://jsonapi.org/format/1.0/#crud-updating"
+    message: "PATCH requests MAY only contain a single resource object"
+    severity: error
+    given: "$.paths[?(!@property.match(/\\/relationships\\//))].patch.requestBody.content[application/vnd.api+json].schema.properties.data[?(@property==='type' && @ === 'array')]"
+    then:
+      function: falsy
 
   # Upstream applies this to every POST body, but a POST to a to-many
   # relationship URL MUST carry an array of resource identifiers, so the rule

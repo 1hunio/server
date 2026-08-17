@@ -1,5 +1,5 @@
 from hashtopolis import User, Helper, HashtopolisError
-from utils import BaseTest, error_title
+from utils import BaseTest, error_title, patch_many
 
 
 class UserTest(BaseTest):
@@ -88,7 +88,7 @@ class UserTest(BaseTest):
     def test_bulk_deactivate(self):
         users = [self.create_test_object() for i in range(5)]
         active_attributes = [False for i in range(5)]
-        User.objects.patch_many(users, active_attributes, "isValid")
+        patch_many(User, users, active_attributes, "isValid")
 
     def test_patch_invalid_email(self):
         model_obj = self.create_test_object()

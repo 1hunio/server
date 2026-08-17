@@ -1,6 +1,6 @@
 from hashtopolis import Config
 from hashtopolis import HashtopolisError
-from utils import BaseTest, error_title
+from utils import BaseTest, error_title, patch_many
 
 
 class ConfigTest(BaseTest):
@@ -23,7 +23,7 @@ class ConfigTest(BaseTest):
     def test_patch_many(self):
         configs = Config.objects.filter(configId__lte='9')
         attributes_to_change = ["10", "40", "1200", "20", "|"]
-        Config.objects.patch_many(configs, attributes_to_change, "value")
+        patch_many(Config, configs, attributes_to_change, "value")
 
         newConfigs = Config.objects.filter(configId__lte='9')
         for new_config, new_attribute in zip(newConfigs, attributes_to_change):

@@ -193,86 +193,6 @@
                         }
                     }
                 ]
-            },
-            "patch": {
-                "tags": [
-                    "Configs"
-                ],
-                "responses": {
-                    "400": {
-                        "description": "Invalid request",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication failed",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Permission denied",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "204": {
-                        "description": "successfully updated"
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "409": {
-                        "description": "Resource already exists",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "x-required-permissions": [
-                    "permConfigUpdate"
-                ],
-                "description": "PATCH request to update attributes of a single object.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/ConfigPatchMultiple"
-                            }
-                        }
-                    }
-                },
-                "parameters": []
             }
         },
         "/api/v2/ui/configs/count": {
@@ -806,7 +726,7 @@
                 "x-required-permissions": [
                     "permConfigUpdate"
                 ],
-                "description": "PATCH request to update attributes of a single object.",
+                "description": "PATCH request to update attributes of a single object. Several objects are updated in one request with the atomic operations endpoint of this collection (`POST .../operations`).",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -853,6 +773,109 @@
                         }
                     }
                 ]
+            }
+        },
+        "/api/v2/ui/configs/operations": {
+            "post": {
+                "tags": [
+                    "Configs"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid request",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication failed",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Permission denied",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "successful operation, one result per operation",
+                        "content": {
+                            "application/vnd.api+json;ext=\"https://jsonapi.org/ext/atomic\"": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConfigAtomicResults"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "successfully applied, no operation returned data"
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Resource already exists",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "415": {
+                        "description": "The Content-Type does not name the atomic operations extension, or carries a media type parameter other than `ext` and `profile`",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-required-permissions": [
+                    "permConfigUpdate"
+                ],
+                "description": "Applies a list of JSON:API atomic operations to the `config` collection ([atomic operations extension](https://jsonapi.org/ext/atomic/)). Every operation addresses one `config` object: `add` creates it, `update` updates its attributes and `remove` deletes it. Only the operations this collection supports are accepted.<br />The operations are applied in the order they are sent and inside one transaction, so a failing operation invalidates the effects of the ones before it.<br />Request and response carry the `ext=\"https://jsonapi.org/ext/atomic\"` media type parameter; a request without it is answered with 415. The answer reports one result per operation, and is 204 when no operation returns data (a body of `remove` operations only).<br />An operation requires the permission of the modification it describes: `add` the create, `update` the update and `remove` the delete permission of this collection.",
+                "summary": "Atomic operations on Configs",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/vnd.api+json;ext=\"https://jsonapi.org/ext/atomic\"": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConfigAtomicOperations"
+                            }
+                        }
+                    }
+                },
+                "parameters": []
             }
         },
         "/api/v2/ui/configsections": {
@@ -1580,7 +1603,8 @@
                         "type": "object",
                         "required": [
                             "type",
-                            "attributes"
+                            "attributes",
+                            "id"
                         ],
                         "properties": {
                             "type": {
@@ -1597,44 +1621,349 @@
                                         "type": "string"
                                     }
                                 }
+                            },
+                            "id": {
+                                "type": "string",
+                                "pattern": "^[0-9]+$",
+                                "example": "1"
                             }
                         }
                     }
                 }
             },
-            "ConfigPatchMultiple": {
+            "ConfigResourceObject": {
                 "type": "object",
                 "required": [
-                    "data"
+                    "id",
+                    "type",
+                    "attributes",
+                    "links",
+                    "relationships"
                 ],
                 "properties": {
-                    "data": {
+                    "id": {
+                        "type": "string",
+                        "pattern": "^[0-9]+$",
+                        "example": "1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "config"
+                    },
+                    "attributes": {
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "title": "ServerLogLevel",
+                                "properties": {
+                                    "configSectionId": {
+                                        "type": "string"
+                                    },
+                                    "item": {
+                                        "type": "string",
+                                        "const": "serverLogLevel"
+                                    },
+                                    "value": {
+                                        "oneOf": [
+                                            {
+                                                "const": "0",
+                                                "title": "TRACE",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "10",
+                                                "title": "DEBUG",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "20",
+                                                "title": "INFO",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "30",
+                                                "title": "WARNING",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "40",
+                                                "title": "ERROR",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "50",
+                                                "title": "FATAL",
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "valueBoundaries": {
+                                        "type": "object",
+                                        "minProperties": 1,
+                                        "properties": {
+                                            "min": {
+                                                "type": "integer",
+                                                "description": "Smallest accepted value of a numeric item"
+                                            },
+                                            "max": {
+                                                "type": "integer",
+                                                "description": "Largest accepted value of a numeric item"
+                                            },
+                                            "maxLength": {
+                                                "type": "integer",
+                                                "description": "Longest accepted value of a textual item"
+                                            },
+                                            "binaryValues": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                },
+                                                "description": "The two values a tickbox item accepts"
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "configSectionId",
+                                    "item",
+                                    "value"
+                                ]
+                            },
+                            {
+                                "type": "object",
+                                "title": "NotificationsProxyType",
+                                "properties": {
+                                    "configSectionId": {
+                                        "type": "string"
+                                    },
+                                    "item": {
+                                        "type": "string",
+                                        "const": "notificationsProxyType"
+                                    },
+                                    "value": {
+                                        "oneOf": [
+                                            {
+                                                "const": "HTTP",
+                                                "title": "HTTP",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "HTTPS",
+                                                "title": "HTTPS",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "SOCKS4",
+                                                "title": "SOCKS4",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "SOCKS5",
+                                                "title": "SOCKS5",
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
+                                    "valueBoundaries": {
+                                        "type": "object",
+                                        "minProperties": 1,
+                                        "properties": {
+                                            "min": {
+                                                "type": "integer",
+                                                "description": "Smallest accepted value of a numeric item"
+                                            },
+                                            "max": {
+                                                "type": "integer",
+                                                "description": "Largest accepted value of a numeric item"
+                                            },
+                                            "maxLength": {
+                                                "type": "integer",
+                                                "description": "Longest accepted value of a textual item"
+                                            },
+                                            "binaryValues": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                },
+                                                "description": "The two values a tickbox item accepts"
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "configSectionId",
+                                    "item",
+                                    "value"
+                                ]
+                            },
+                            {
+                                "type": "object",
+                                "title": "ConfigGeneric",
+                                "properties": {
+                                    "configSectionId": {
+                                        "type": "string"
+                                    },
+                                    "item": {
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "type": "string"
+                                    },
+                                    "valueBoundaries": {
+                                        "type": "object",
+                                        "minProperties": 1,
+                                        "properties": {
+                                            "min": {
+                                                "type": "integer",
+                                                "description": "Smallest accepted value of a numeric item"
+                                            },
+                                            "max": {
+                                                "type": "integer",
+                                                "description": "Largest accepted value of a numeric item"
+                                            },
+                                            "maxLength": {
+                                                "type": "integer",
+                                                "description": "Longest accepted value of a textual item"
+                                            },
+                                            "binaryValues": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                },
+                                                "description": "The two values a tickbox item accepts"
+                                            }
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "configSectionId",
+                                    "item",
+                                    "value"
+                                ]
+                            }
+                        ]
+                    },
+                    "links": {
+                        "type": "object",
+                        "required": [
+                            "self"
+                        ],
+                        "properties": {
+                            "self": {
+                                "type": "string",
+                                "default": "/api/v2/ui/configs/1"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "required": [
+                            "configSection"
+                        ],
+                        "properties": {
+                            "configSection": {
+                                "type": "object",
+                                "required": [
+                                    "links"
+                                ],
+                                "properties": {
+                                    "links": {
+                                        "type": "object",
+                                        "required": [
+                                            "self",
+                                            "related"
+                                        ],
+                                        "properties": {
+                                            "self": {
+                                                "type": "string",
+                                                "default": "/api/v2/ui/configs/relationships/configSection"
+                                            },
+                                            "related": {
+                                                "type": "string",
+                                                "default": "/api/v2/ui/configs/configSection"
+                                            }
+                                        }
+                                    },
+                                    "data": {
+                                        "oneOf": [
+                                            {
+                                                "type": "object",
+                                                "required": [
+                                                    "type",
+                                                    "id"
+                                                ],
+                                                "properties": {
+                                                    "type": {
+                                                        "type": "string",
+                                                        "const": "configSection"
+                                                    },
+                                                    "id": {
+                                                        "type": "string",
+                                                        "pattern": "^[0-9]+$",
+                                                        "example": "1"
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "type": "null"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ConfigAtomicOperations": {
+                "type": "object",
+                "required": [
+                    "atomic:operations"
+                ],
+                "properties": {
+                    "atomic:operations": {
                         "type": "array",
+                        "minItems": 1,
+                        "description": "The operations to apply, in the order they are applied. Either all of them take effect or none does.",
                         "items": {
                             "type": "object",
+                            "description": "Updates the attributes of the object named by `data.id`, the same modification as a `PATCH` on that object.",
                             "required": [
-                                "id",
-                                "type",
-                                "attributes"
+                                "op",
+                                "data"
                             ],
                             "properties": {
-                                "id": {
+                                "op": {
                                     "type": "string",
-                                    "pattern": "^[0-9]+$",
-                                    "example": "1"
+                                    "const": "update"
                                 },
-                                "type": {
-                                    "type": "string",
-                                    "const": "config"
-                                },
-                                "attributes": {
+                                "data": {
                                     "type": "object",
+                                    "required": [
+                                        "id",
+                                        "type",
+                                        "attributes"
+                                    ],
                                     "properties": {
-                                        "item": {
-                                            "type": "string"
+                                        "id": {
+                                            "type": "string",
+                                            "pattern": "^[0-9]+$",
+                                            "example": "1"
                                         },
-                                        "value": {
-                                            "type": "string"
+                                        "type": {
+                                            "type": "string",
+                                            "const": "config"
+                                        },
+                                        "attributes": {
+                                            "type": "object",
+                                            "properties": {
+                                                "item": {
+                                                    "type": "string"
+                                                },
+                                                "value": {
+                                                    "type": "string"
+                                                }
+                                            }
                                         }
                                     }
                                 }
@@ -1643,29 +1972,43 @@
                     }
                 }
             },
-            "ConfigDeleteMultiple": {
+            "ConfigAtomicResults": {
                 "type": "object",
                 "required": [
-                    "data"
+                    "jsonapi",
+                    "atomic:results"
                 ],
                 "properties": {
-                    "data": {
+                    "jsonapi": {
+                        "type": "object",
+                        "required": [
+                            "version"
+                        ],
+                        "properties": {
+                            "version": {
+                                "type": "string",
+                                "default": "1.1"
+                            },
+                            "ext": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "default": [
+                                    "https://jsonapi.org/ext/atomic"
+                                ]
+                            }
+                        }
+                    },
+                    "atomic:results": {
                         "type": "array",
+                        "description": "One result per operation, in request order.",
                         "items": {
                             "type": "object",
-                            "required": [
-                                "id",
-                                "type"
-                            ],
+                            "description": "The object written by the operation, empty (`{}`) for a removal.",
                             "properties": {
-                                "id": {
-                                    "type": "string",
-                                    "pattern": "^[0-9]+$",
-                                    "example": "1"
-                                },
-                                "type": {
-                                    "type": "string",
-                                    "const": "config"
+                                "data": {
+                                    "$ref": "#/components/schemas/ConfigResourceObject"
                                 }
                             }
                         }
@@ -2599,7 +2942,8 @@
                         "type": "object",
                         "required": [
                             "type",
-                            "attributes"
+                            "attributes",
+                            "id"
                         ],
                         "properties": {
                             "type": {
@@ -2613,73 +2957,11 @@
                                         "type": "string"
                                     }
                                 }
-                            }
-                        }
-                    }
-                }
-            },
-            "ConfigSectionPatchMultiple": {
-                "type": "object",
-                "required": [
-                    "data"
-                ],
-                "properties": {
-                    "data": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "required": [
-                                "id",
-                                "type",
-                                "attributes"
-                            ],
-                            "properties": {
-                                "id": {
-                                    "type": "string",
-                                    "pattern": "^[0-9]+$",
-                                    "example": "1"
-                                },
-                                "type": {
-                                    "type": "string",
-                                    "const": "configSection"
-                                },
-                                "attributes": {
-                                    "type": "object",
-                                    "properties": {
-                                        "sectionName": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "ConfigSectionDeleteMultiple": {
-                "type": "object",
-                "required": [
-                    "data"
-                ],
-                "properties": {
-                    "data": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "required": [
-                                "id",
-                                "type"
-                            ],
-                            "properties": {
-                                "id": {
-                                    "type": "string",
-                                    "pattern": "^[0-9]+$",
-                                    "example": "1"
-                                },
-                                "type": {
-                                    "type": "string",
-                                    "const": "configSection"
-                                }
+                            },
+                            "id": {
+                                "type": "string",
+                                "pattern": "^[0-9]+$",
+                                "example": "1"
                             }
                         }
                     }

@@ -265,156 +265,6 @@
                         }
                     }
                 ]
-            },
-            "patch": {
-                "tags": [
-                    "HashTypes"
-                ],
-                "responses": {
-                    "400": {
-                        "description": "Invalid request",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication failed",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Permission denied",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "204": {
-                        "description": "successfully updated"
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "409": {
-                        "description": "Resource already exists",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "x-required-permissions": [
-                    "permHashTypeUpdate"
-                ],
-                "description": "PATCH request to update attributes of a single object.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/HashTypePatchMultiple"
-                            }
-                        }
-                    }
-                },
-                "parameters": []
-            },
-            "delete": {
-                "tags": [
-                    "HashTypes"
-                ],
-                "responses": {
-                    "400": {
-                        "description": "Invalid request",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Authentication failed",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "403": {
-                        "description": "Permission denied",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "204": {
-                        "description": "successfully deleted"
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "x-required-permissions": [
-                    "permHashTypeDelete"
-                ],
-                "description": "",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/vnd.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/HashTypeDeleteMultiple"
-                            }
-                        }
-                    }
-                },
-                "parameters": []
             }
         },
         "/api/v2/ui/hashtypes/count": {
@@ -685,7 +535,7 @@
                 "x-required-permissions": [
                     "permHashTypeUpdate"
                 ],
-                "description": "PATCH request to update attributes of a single object.",
+                "description": "PATCH request to update attributes of a single object. Several objects are updated in one request with the atomic operations endpoint of this collection (`POST .../operations`).",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -773,7 +623,112 @@
                 "x-required-permissions": [
                     "permHashTypeDelete"
                 ],
-                "description": "",
+                "description": "DELETE request to remove a single object. Several objects are removed in one request with the atomic operations endpoint of this collection (`POST .../operations`).",
+                "parameters": []
+            }
+        },
+        "/api/v2/ui/hashtypes/operations": {
+            "post": {
+                "tags": [
+                    "HashTypes"
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Invalid request",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Authentication failed",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Permission denied",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "200": {
+                        "description": "successful operation, one result per operation",
+                        "content": {
+                            "application/vnd.api+json;ext=\"https://jsonapi.org/ext/atomic\"": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HashTypeAtomicResults"
+                                }
+                            }
+                        }
+                    },
+                    "204": {
+                        "description": "successfully applied, no operation returned data"
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Resource already exists",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "415": {
+                        "description": "The Content-Type does not name the atomic operations extension, or carries a media type parameter other than `ext` and `profile`",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "x-required-permissions": [
+                    "permHashTypeCreate",
+                    "permHashTypeUpdate",
+                    "permHashTypeDelete"
+                ],
+                "description": "Applies a list of JSON:API atomic operations to the `hashType` collection ([atomic operations extension](https://jsonapi.org/ext/atomic/)). Every operation addresses one `hashType` object: `add` creates it, `update` updates its attributes and `remove` deletes it. Only the operations this collection supports are accepted.<br />The operations are applied in the order they are sent and inside one transaction, so a failing operation invalidates the effects of the ones before it.<br />Request and response carry the `ext=\"https://jsonapi.org/ext/atomic\"` media type parameter; a request without it is answered with 415. The answer reports one result per operation, and is 204 when no operation returns data (a body of `remove` operations only).<br />An operation requires the permission of the modification it describes: `add` the create, `update` the update and `remove` the delete permission of this collection.",
+                "summary": "Atomic operations on HashTypes",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/vnd.api+json;ext=\"https://jsonapi.org/ext/atomic\"": {
+                            "schema": {
+                                "$ref": "#/components/schemas/HashTypeAtomicOperations"
+                            }
+                        }
+                    }
+                },
                 "parameters": []
             }
         },
@@ -1158,7 +1113,8 @@
                         "type": "object",
                         "required": [
                             "type",
-                            "attributes"
+                            "attributes",
+                            "id"
                         ],
                         "properties": {
                             "type": {
@@ -1178,78 +1134,250 @@
                                         "type": "boolean"
                                     }
                                 }
+                            },
+                            "id": {
+                                "type": "string",
+                                "pattern": "^[0-9]+$",
+                                "example": "1"
                             }
                         }
                     }
                 }
             },
-            "HashTypePatchMultiple": {
+            "HashTypeResourceObject": {
                 "type": "object",
                 "required": [
-                    "data"
+                    "id",
+                    "type",
+                    "attributes",
+                    "links"
                 ],
                 "properties": {
-                    "data": {
+                    "id": {
+                        "type": "string",
+                        "pattern": "^[0-9]+$",
+                        "example": "1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "hashType"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "required": [
+                            "description",
+                            "isSalted",
+                            "isSlowHash"
+                        ],
+                        "properties": {
+                            "description": {
+                                "type": "string"
+                            },
+                            "isSalted": {
+                                "type": "boolean"
+                            },
+                            "isSlowHash": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "links": {
+                        "type": "object",
+                        "required": [
+                            "self"
+                        ],
+                        "properties": {
+                            "self": {
+                                "type": "string",
+                                "default": "/api/v2/ui/hashtypes/1"
+                            }
+                        }
+                    }
+                }
+            },
+            "HashTypeAtomicOperations": {
+                "type": "object",
+                "required": [
+                    "atomic:operations"
+                ],
+                "properties": {
+                    "atomic:operations": {
                         "type": "array",
+                        "minItems": 1,
+                        "description": "The operations to apply, in the order they are applied. Either all of them take effect or none does.",
                         "items": {
-                            "type": "object",
-                            "required": [
-                                "id",
-                                "type",
-                                "attributes"
-                            ],
-                            "properties": {
-                                "id": {
-                                    "type": "string",
-                                    "pattern": "^[0-9]+$",
-                                    "example": "1"
-                                },
-                                "type": {
-                                    "type": "string",
-                                    "const": "hashType"
-                                },
-                                "attributes": {
+                            "oneOf": [
+                                {
                                     "type": "object",
+                                    "description": "Creates one object from the attributes given, the same modification as a `POST` to this collection.",
+                                    "required": [
+                                        "op",
+                                        "data"
+                                    ],
                                     "properties": {
-                                        "description": {
-                                            "type": "string"
+                                        "op": {
+                                            "type": "string",
+                                            "const": "add"
                                         },
-                                        "isSalted": {
-                                            "type": "boolean"
+                                        "data": {
+                                            "type": "object",
+                                            "required": [
+                                                "type",
+                                                "attributes"
+                                            ],
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "const": "hashType"
+                                                },
+                                                "attributes": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "hashTypeId": {
+                                                            "type": "integer"
+                                                        },
+                                                        "description": {
+                                                            "type": "string"
+                                                        },
+                                                        "isSalted": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "isSlowHash": {
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "hashTypeId",
+                                                        "description",
+                                                        "isSalted",
+                                                        "isSlowHash"
+                                                    ]
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "type": "object",
+                                    "description": "Updates the attributes of the object named by `data.id`, the same modification as a `PATCH` on that object.",
+                                    "required": [
+                                        "op",
+                                        "data"
+                                    ],
+                                    "properties": {
+                                        "op": {
+                                            "type": "string",
+                                            "const": "update"
                                         },
-                                        "isSlowHash": {
-                                            "type": "boolean"
+                                        "data": {
+                                            "type": "object",
+                                            "required": [
+                                                "id",
+                                                "type",
+                                                "attributes"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "pattern": "^[0-9]+$",
+                                                    "example": "1"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "const": "hashType"
+                                                },
+                                                "attributes": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "description": {
+                                                            "type": "string"
+                                                        },
+                                                        "isSalted": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "isSlowHash": {
+                                                            "type": "boolean"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "type": "object",
+                                    "description": "Deletes the object named by `ref`, the same modification as a `DELETE` on that object.",
+                                    "required": [
+                                        "op",
+                                        "ref"
+                                    ],
+                                    "properties": {
+                                        "op": {
+                                            "type": "string",
+                                            "const": "remove"
+                                        },
+                                        "ref": {
+                                            "type": "object",
+                                            "required": [
+                                                "type",
+                                                "id"
+                                            ],
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "const": "hashType"
+                                                },
+                                                "id": {
+                                                    "type": "string",
+                                                    "pattern": "^[0-9]+$",
+                                                    "example": "1"
+                                                }
+                                            }
                                         }
                                     }
                                 }
-                            }
+                            ]
                         }
                     }
                 }
             },
-            "HashTypeDeleteMultiple": {
+            "HashTypeAtomicResults": {
                 "type": "object",
                 "required": [
-                    "data"
+                    "jsonapi",
+                    "atomic:results"
                 ],
                 "properties": {
-                    "data": {
+                    "jsonapi": {
+                        "type": "object",
+                        "required": [
+                            "version"
+                        ],
+                        "properties": {
+                            "version": {
+                                "type": "string",
+                                "default": "1.1"
+                            },
+                            "ext": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                },
+                                "default": [
+                                    "https://jsonapi.org/ext/atomic"
+                                ]
+                            }
+                        }
+                    },
+                    "atomic:results": {
                         "type": "array",
+                        "description": "One result per operation, in request order.",
                         "items": {
                             "type": "object",
-                            "required": [
-                                "id",
-                                "type"
-                            ],
+                            "description": "The object written by the operation, empty (`{}`) for a removal.",
                             "properties": {
-                                "id": {
-                                    "type": "string",
-                                    "pattern": "^[0-9]+$",
-                                    "example": "1"
-                                },
-                                "type": {
-                                    "type": "string",
-                                    "const": "hashType"
+                                "data": {
+                                    "$ref": "#/components/schemas/HashTypeResourceObject"
                                 }
                             }
                         }
