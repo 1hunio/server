@@ -55,6 +55,16 @@
                             }
                         }
                     },
+                    "406": {
+                        "description": "The Accept header only asks for instances of `application/vnd.api+json` that cannot be served, because they carry a media type parameter other than `ext` and `profile` or name an unsupported extension",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
                     "200": {
                         "description": "successful operation",
                         "content": {
@@ -206,6 +216,26 @@
                             }
                         }
                     },
+                    "406": {
+                        "description": "The Accept header only asks for instances of `application/vnd.api+json` that cannot be served, because they carry a media type parameter other than `ext` and `profile` or name an unsupported extension",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "415": {
+                        "description": "The Content-Type is `application/vnd.api+json` with a media type parameter other than `ext` and `profile`, or names an unsupported extension",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
                     "201": {
                         "description": "successful operation",
                         "content": {
@@ -303,6 +333,16 @@
                             }
                         }
                     },
+                    "406": {
+                        "description": "The Accept header only asks for instances of `application/vnd.api+json` that cannot be served, because they carry a media type parameter other than `ext` and `profile` or name an unsupported extension",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
                     "200": {
                         "description": "successful operation",
                         "content": {
@@ -380,6 +420,16 @@
                     },
                     "403": {
                         "description": "Permission denied",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "The Accept header only asks for instances of `application/vnd.api+json` that cannot be served, because they carry a media type parameter other than `ext` and `profile` or name an unsupported extension",
                         "content": {
                             "application/vnd.api+json": {
                                 "schema": {
@@ -496,6 +546,26 @@
                             }
                         }
                     },
+                    "406": {
+                        "description": "The Accept header only asks for instances of `application/vnd.api+json` that cannot be served, because they carry a media type parameter other than `ext` and `profile` or name an unsupported extension",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "415": {
+                        "description": "The Content-Type is `application/vnd.api+json` with a media type parameter other than `ext` and `profile`, or names an unsupported extension",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "content": {
@@ -601,6 +671,16 @@
                             }
                         }
                     },
+                    "406": {
+                        "description": "The Accept header only asks for instances of `application/vnd.api+json` that cannot be served, because they carry a media type parameter other than `ext` and `profile` or name an unsupported extension",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
                     "404": {
                         "description": "Not Found",
                         "content": {
@@ -663,6 +743,26 @@
                             }
                         }
                     },
+                    "406": {
+                        "description": "The Accept header only asks for instances of `application/vnd.api+json` that cannot be served, because they carry a media type parameter other than `ext` and `profile` or name an unsupported extension",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "415": {
+                        "description": "The Content-Type does not name the atomic operations extension, or carries a media type parameter other than `ext` and `profile`",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
                     "200": {
                         "description": "successful operation, one result per operation",
                         "content": {
@@ -688,16 +788,6 @@
                     },
                     "409": {
                         "description": "Resource already exists",
-                        "content": {
-                            "application/vnd.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "415": {
-                        "description": "The Content-Type does not name the atomic operations extension, or carries a media type parameter other than `ext` and `profile`",
                         "content": {
                             "application/vnd.api+json": {
                                 "schema": {
@@ -780,6 +870,26 @@
                     },
                     "403": {
                         "description": "The user is set to invalid",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "The Accept header only asks for instances of `application/vnd.api+json` that cannot be served",
+                        "content": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "415": {
+                        "description": "The Content-Type is `application/vnd.api+json` with a media type parameter other than `ext` and `profile`, or names an unsupported extension",
                         "content": {
                             "application/vnd.api+json": {
                                 "schema": {

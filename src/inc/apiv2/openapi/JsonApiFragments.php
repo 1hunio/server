@@ -88,15 +88,33 @@ class JsonApiFragments {
 
   /**
    * The errors every authenticated APIv2 route can answer with: 400 on a
-   * malformed request, 401 without a usable token and 403 when the token lacks
-   * the permission the route requires.
+   * malformed request, 401 without a usable token, 403 when the token lacks the
+   * permission the route requires and 406 when the Accept header asks for the
+   * JSON:API media type in a way the server cannot serve
+   * (ContentNegotiationMiddleware).
    */
   public function commonErrorResponses(): array {
     return [
       "400" => $this->errorResponse("Invalid request"),
       "401" => $this->errorResponse("Authentication failed"),
-      "403" => $this->errorResponse("Permission denied")
+      "403" => $this->errorResponse("Permission denied"),
+      "406" => $this->errorResponse(
+        "The Accept header only asks for instances of `" . self::MEDIA_TYPE . "` that cannot be served,"
+        . " because they carry a media type parameter other than `ext` and `profile` or name an unsupported extension"
+      )
     ];
+  }
+
+  /**
+   * The answer to a request body sent as the JSON:API media type modified with a
+   * media type parameter the specification does not define, or naming an
+   * extension the server does not implement (ContentNegotiationMiddleware).
+   */
+  public function unsupportedMediaTypeResponse(): array {
+    return $this->errorResponse(
+      "The Content-Type is `" . self::MEDIA_TYPE . "` with a media type parameter other than `ext` and `profile`,"
+      . " or names an unsupported extension"
+    );
   }
 
   /**

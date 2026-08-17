@@ -247,6 +247,21 @@ final class FullSpecTest extends TestCase {
   }
 
   /**
+   * ContentNegotiationMiddleware runs for every route, so every operation can
+   * answer 406, and every operation taking a body can answer 415.
+   */
+  public function testEveryOperationDocumentsContentNegotiation(): void {
+    foreach (self::$sanitized['paths'] as $path => $pathItem) {
+      foreach ($pathItem as $method => $operation) {
+        $this->assertArrayHasKey('406', $operation['responses'], "$method $path");
+        if (in_array($method, ['post', 'patch'], true)) {
+          $this->assertArrayHasKey('415', $operation['responses'], "$method $path");
+        }
+      }
+    }
+  }
+
+  /**
    * A single object PATCH carries the id of the object it updates, which
    * AbstractModelAPI::patchSingleObject requires and JSON:API mandates.
    */

@@ -278,6 +278,11 @@ class ModelApiPathBuilder {
 
     $paths[$path][$method]["description"] = $this->jsonApiFragments->makeDescription($isRelation, $method, $singleObject);
 
+    /* A request body under an unusable JSON:API media type never reaches the route */
+    if (in_array($method, ["post", "patch"], true)) {
+      $paths[$path][$method]["responses"]["415"] = $this->jsonApiFragments->unsupportedMediaTypeResponse();
+    }
+
     if ($isOperations) {
       $paths[$path][$method]["summary"] = "Atomic operations on " . $name . "s";
       $paths[$path][$method]["description"] = $this->jsonApiFragments->makeAtomicOperationsDescription($typeName);

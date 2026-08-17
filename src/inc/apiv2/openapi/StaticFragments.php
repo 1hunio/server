@@ -86,7 +86,15 @@ class StaticFragments {
           "400" => $this->errorResponse("Invalid request"),
           "401" => $this->errorResponse("Authentication failed"),
           /* generateTokenForUser refuses a user that is set to invalid */
-          "403" => $this->errorResponse("The user is set to invalid")
+          "403" => $this->errorResponse("The user is set to invalid"),
+          /* Content negotiation happens for every route, this one included */
+          "406" => $this->errorResponse(
+            "The Accept header only asks for instances of `" . JsonApiFragments::MEDIA_TYPE . "` that cannot be served"
+          ),
+          "415" => $this->errorResponse(
+            "The Content-Type is `" . JsonApiFragments::MEDIA_TYPE . "` with a media type parameter other than"
+            . " `ext` and `profile`, or names an unsupported extension"
+          )
         ],
         "security" => [
           [

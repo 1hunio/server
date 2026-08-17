@@ -21,17 +21,6 @@ extends:
   - ./spectral-jsonapi.yml
 
 rules:
-  # The APIv2 never inspects the Accept header, so it cannot answer 406. There is
-  # no content negotiation middleware in src/inc/apiv2 at all, so there is no
-  # narrower scope the rule could hold in. Restored once a middleware answers it.
-  406-response-code: off
-
-  # Only the TUS upload endpoint validates Content-Type and answers 415
-  # (ImportFileHelperAPI::processPatch). No other route does, so requiring a
-  # documented 415 on every POST and PATCH would document a reply that never
-  # comes. Restored once a middleware answers it for every route.
-  415-response-code: off
-
   # SearchHashesHelperAPI answers a bare list of per-query results, which
   # getMetaResponse puts under the top level "meta", so that one document has an
   # array where JSON:API requires an object. Every other path is still checked.
