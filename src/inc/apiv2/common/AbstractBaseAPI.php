@@ -1735,7 +1735,11 @@ abstract class AbstractBaseAPI {
     $response = [
       "jsonapi" => [
         "version" => "1.1",
-        "ext" => [
+        /**
+         * Cursor pagination is a profile, not an extension: JSON:API 1.1 keeps
+         * extension URIs in "ext" and profile URIs in "profile".
+         */
+        "profile" => [
           "https://jsonapi.org/profiles/ethanresnick/cursor-pagination"
         ],
       ],

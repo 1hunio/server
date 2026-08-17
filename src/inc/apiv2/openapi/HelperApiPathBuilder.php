@@ -51,7 +51,7 @@ class HelperApiPathBuilder {
      * errors.
      */
     $paths[$path][$method]["responses"] = $this->jsonApiFragments->commonErrorResponses();
-    $paths[$path][$method]["responses"]["404"] = $this->jsonApiFragments->problemResponse("Not Found");
+    $paths[$path][$method]["responses"]["404"] = $this->jsonApiFragments->errorResponse("Not Found");
 
     if ($method == "post" && $hasProperties) {
       $reflectionMethodFormFields = new ReflectionMethod($name, "getFormFields");

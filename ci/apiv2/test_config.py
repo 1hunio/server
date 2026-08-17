@@ -1,6 +1,6 @@
 from hashtopolis import Config
 from hashtopolis import HashtopolisError
-from utils import BaseTest
+from utils import BaseTest, error_title
 
 
 class ConfigTest(BaseTest):
@@ -74,7 +74,7 @@ class ConfigTest(BaseTest):
             config.value = '70000'
             with self.assertRaises(HashtopolisError) as e:
                 config.save()
-            self.assertIn('at most 65535', e.exception.title)
+            self.assertIn('at most 65535', error_title(e.exception))
         finally:
             config.value = original_value
             config.save()
@@ -87,7 +87,7 @@ class ConfigTest(BaseTest):
             config.value = '::'
             with self.assertRaises(HashtopolisError) as e:
                 config.save()
-            self.assertIn('at most 1', e.exception.title)
+            self.assertIn('at most 1', error_title(e.exception))
         finally:
             config.value = original_value
             config.save()

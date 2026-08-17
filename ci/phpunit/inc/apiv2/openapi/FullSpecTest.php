@@ -125,9 +125,9 @@ final class FullSpecTest extends TestCase {
     $this->assertArrayNotHasKey('200', $post['responses']);
   }
 
-  /**
-   * Every JSON:API payload is served as application/vnd.api+json and every
-   * error as an RFC 7807 problem document, matching what the API sends.
+   /**
+   * Every payload the API sends is served as application/vnd.api+json, errors
+   * included: ErrorHandler::errorResponse answers a JSON:API error document.
    */
   public function testMediaTypesMatchWhatTheApiSends(): void {
     foreach (self::$sanitized['paths'] as $path => $pathItem) {
@@ -140,8 +140,7 @@ final class FullSpecTest extends TestCase {
           if ($mediaTypes === []) {
             continue;
           }
-          $expected = ((int)$code >= 400) ? 'application/problem+json' : 'application/vnd.api+json';
-          $this->assertSame([$expected], $mediaTypes, "$method $path response $code");
+          $this->assertSame(['application/vnd.api+json'], $mediaTypes, "$method $path response $code");
         }
         if (isset($operation['requestBody']['content'])) {
           $this->assertSame(
@@ -152,6 +151,34 @@ final class FullSpecTest extends TestCase {
         }
       }
     }
+  }
+
+  /**
+   * Errors are JSON:API error documents: one error object under "errors", with
+   * the status as a string (ErrorHandler::errorResponse).
+   */
+  public function testErrorsAreJsonApiErrorDocuments(): void {
+    $error = self::$sanitized['components']['schemas']['ErrorResponse'];
+    $this->assertSame(['jsonapi', 'errors'], $error['required']);
+    $this->assertSame(1, $error['properties']['errors']['maxItems']);
+    $errorObject = $error['properties']['errors']['items'];
+    $this->assertSame(['status', 'title'], $errorObject['required']);
+    $this->assertSame('string', $errorObject['properties']['status']['type']);
+    /* An error document applies no extension and no profile */
+    $this->assertSame(['version'], array_keys($error['properties']['jsonapi']['properties']));
+  }
+
+  /**
+   * Cursor pagination is a profile, not an extension, so an ordinary document
+   * reports it under jsonapi.profile (AbstractBaseAPI::createJsonResponse).
+   */
+  public function testOrdinaryDocumentsReportTheCursorPaginationProfile(): void {
+    $header = self::$sanitized['components']['schemas']['AgentListResponse']['properties']['jsonapi']['properties'];
+    $this->assertArrayNotHasKey('ext', $header);
+    $this->assertSame(
+      [JsonApiFragments::CURSOR_PAGINATION_PROFILE],
+      $header['profile']['default']
+    );
   }
 
   /**

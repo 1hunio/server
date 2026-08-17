@@ -3,6 +3,7 @@ import datetime
 from io import BytesIO
 import json
 from pathlib import Path
+import re
 import requests
 import tempfile
 import time
@@ -286,6 +287,25 @@ def create_restricted_user(base_test, permissions):
 
     return (user.name, password)
 
+def error_title(exception):
+    """The title of the JSON:API error object the server answered with.
+
+    The client still reads the flat error format the API used before it answered
+    JSON:API error documents, so the document is taken from the raw response body
+    the client keeps in the exception message.
+    """
+    match = re.search(r'\{.*\}\s*$', str(exception), re.S)
+    if match is not None:
+        try:
+            document = json.loads(match.group(0))
+        except json.JSONDecodeError:
+            document = {}
+        errors = document.get('errors') or []
+        if errors:
+            return errors[0].get('title', '')
+    return getattr(exception, 'title', None) or ''
+
+
 def find_stale_test_objects():
     # Order matters, for example a Task needs to be removed before Hashlist can be removed
     # Note: we are not removing default database objects
@@ -467,7 +487,7 @@ class BaseTest(unittest.TestCase):
             _ = func_create(*args, **kwargs)
         self.assertIn(e.exception.status_code,  [403, 500, 400])
         # checks len of both old and new exceptions style, TODO: old can be removed when ervything has been refactored.
-        self.assertTrue(len(e.exception.exception_details) >= 1 or len(e.exception.title) >= 1)
+        self.assertTrue(len(e.exception.exception_details) >= 1 or len(error_title(e.exception)) >= 1)
 
     def _test_acl_list(self, model_obj, permissions):
         """Test that a restricted user (with no access groups) cannot see the object in list results."""

@@ -11,11 +11,11 @@ class JsonApiFragments {
   public const MEDIA_TYPE = "application/vnd.api+json";
 
   /**
-   * Media type of the error documents. Every APIv2 error is rendered by
-   * ErrorHandler::errorResponse as an RFC 7807 problem document, not as a
-   * JSON:API error document.
+   * URI of the cursor pagination profile the APIv2 follows. It is a profile and
+   * not an extension: it adds no document member, it only gives meaning to the
+   * page[after]/page[before] query parameters JSON:API already allows.
    */
-  public const PROBLEM_MEDIA_TYPE = "application/problem+json";
+  public const CURSOR_PAGINATION_PROFILE = "https://jsonapi.org/profiles/ethanresnick/cursor-pagination";
 
   /**
    * The id of a resource object or resource identifier object. JSON:API requires
@@ -59,13 +59,14 @@ class JsonApiFragments {
   }
 
   /**
-   * A single RFC 7807 problem response.
+   * An error response: a JSON:API error document, as ErrorHandler::errorResponse
+   * renders every error of the APIv2.
    */
-  public function problemResponse(string $description): array {
+  public function errorResponse(string $description): array {
     return [
       "description" => $description,
       "content" => [
-        self::PROBLEM_MEDIA_TYPE => [
+        self::MEDIA_TYPE => [
           "schema" => ['$ref' => "#/components/schemas/ErrorResponse"]
         ]
       ]
@@ -79,33 +80,49 @@ class JsonApiFragments {
    */
   public function commonErrorResponses(): array {
     return [
-      "400" => $this->problemResponse("Invalid request"),
-      "401" => $this->problemResponse("Authentication failed"),
-      "403" => $this->problemResponse("Permission denied")
+      "400" => $this->errorResponse("Invalid request"),
+      "401" => $this->errorResponse("Authentication failed"),
+      "403" => $this->errorResponse("Permission denied")
     ];
   }
 
-  // "jsonapi": {
-  //   "version": "1.1",
-  //   "ext": [
-  //       "https://jsonapi.org/profiles/ethanresnick/cursor-pagination"
-  //   ]
-  // },
-  public function makeJsonApiHeader(): array {
+  /**
+   * The jsonapi member of a document, as AbstractBaseAPI::createJsonResponse
+   * builds it:
+   *
+   * "jsonapi": {
+   *   "version": "1.1",
+   *   "profile": ["https://jsonapi.org/profiles/ethanresnick/cursor-pagination"]
+   * }
+   *
+   * JSON:API 1.1 keeps the URIs of applied extensions in "ext" and those of
+   * applied profiles in "profile".
+   *
+   * @param list<string> $profile URIs of the profiles the document applies
+   * @param list<string> $ext URIs of the extensions the document applies
+   */
+  public function makeJsonApiHeader(array $profile = [self::CURSOR_PAGINATION_PROFILE], array $ext = []): array {
+    $properties = [
+      "version" => [
+        "type" => "string",
+        "default" => "1.1"
+      ]
+    ];
+    foreach (["ext" => $ext, "profile" => $profile] as $member => $uris) {
+      if (count($uris) === 0) {
+        continue;
+      }
+      $properties[$member] = [
+        "type" => "array",
+        "items" => ["type" => "string"],
+        "default" => $uris
+      ];
+    }
+
     return ["jsonapi" => [
       "type" => "object",
       "required" => ["version"],
-      "properties" => [
-        "version" => [
-          "type" => "string",
-          "default" => "1.1"
-        ],
-        "ext" => [
-          "type" => "array",
-          "items" => ["type" => "string"],
-          "default" => ["https://jsonapi.org/profiles/ethanresnick/cursor-pagination"]
-        ]
-      ]
+      "properties" => $properties
     ]
     ];
   }

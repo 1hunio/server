@@ -28,7 +28,7 @@
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -38,7 +38,7 @@
                     "401": {
                         "description": "Authentication failed",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -48,7 +48,7 @@
                     "403": {
                         "description": "Permission denied",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -187,7 +187,7 @@
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -197,7 +197,7 @@
                     "401": {
                         "description": "Authentication failed",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -207,7 +207,7 @@
                     "403": {
                         "description": "Permission denied",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -227,7 +227,7 @@
                     "409": {
                         "description": "Resource already exists",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -282,7 +282,7 @@
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -292,7 +292,7 @@
                     "401": {
                         "description": "Authentication failed",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -302,7 +302,7 @@
                     "403": {
                         "description": "Permission denied",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -315,7 +315,7 @@
                     "404": {
                         "description": "Not Found",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -325,7 +325,7 @@
                     "409": {
                         "description": "Resource already exists",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -362,7 +362,7 @@
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -372,7 +372,7 @@
                     "401": {
                         "description": "Authentication failed",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -382,7 +382,7 @@
                     "403": {
                         "description": "Permission denied",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -395,7 +395,7 @@
                     "404": {
                         "description": "Not Found",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -434,7 +434,7 @@
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -444,7 +444,7 @@
                     "401": {
                         "description": "Authentication failed",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -454,7 +454,7 @@
                     "403": {
                         "description": "Permission denied",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -519,7 +519,7 @@
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -529,7 +529,7 @@
                     "401": {
                         "description": "Authentication failed",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -539,7 +539,7 @@
                     "403": {
                         "description": "Permission denied",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -549,7 +549,7 @@
                     "404": {
                         "description": "Not Found",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -599,7 +599,7 @@
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -609,7 +609,7 @@
                     "401": {
                         "description": "Authentication failed",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -619,7 +619,7 @@
                     "403": {
                         "description": "Permission denied",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -629,7 +629,7 @@
                     "404": {
                         "description": "Not Found",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -677,7 +677,7 @@
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -687,7 +687,7 @@
                     "401": {
                         "description": "Authentication failed",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -697,7 +697,7 @@
                     "403": {
                         "description": "Permission denied",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -710,7 +710,7 @@
                     "404": {
                         "description": "Not Found",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -720,7 +720,7 @@
                     "409": {
                         "description": "Resource already exists",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -757,7 +757,7 @@
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -767,7 +767,7 @@
                     "401": {
                         "description": "Authentication failed",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -777,7 +777,7 @@
                     "403": {
                         "description": "Permission denied",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -790,7 +790,7 @@
                     "404": {
                         "description": "Not Found",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -800,7 +800,7 @@
                     "409": {
                         "description": "Resource already exists",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -837,7 +837,7 @@
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -847,7 +847,7 @@
                     "401": {
                         "description": "Authentication failed",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -857,7 +857,7 @@
                     "403": {
                         "description": "Permission denied",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -870,7 +870,7 @@
                     "404": {
                         "description": "Not Found",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -909,7 +909,7 @@
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -919,7 +919,7 @@
                     "401": {
                         "description": "Authentication failed",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -929,7 +929,7 @@
                     "403": {
                         "description": "Permission denied",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -939,7 +939,7 @@
                     "404": {
                         "description": "Not Found",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -1025,7 +1025,7 @@
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -1035,7 +1035,7 @@
                     "401": {
                         "description": "Authentication failed",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -1045,7 +1045,7 @@
                     "403": {
                         "description": "Permission denied",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -1055,7 +1055,7 @@
                     "404": {
                         "description": "Not Found",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -1065,7 +1065,7 @@
                     "409": {
                         "description": "Resource already exists",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -1130,7 +1130,7 @@
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -1140,7 +1140,7 @@
                     "401": {
                         "description": "Authentication failed",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -1150,7 +1150,7 @@
                     "403": {
                         "description": "Permission denied",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -1160,7 +1160,7 @@
                     "404": {
                         "description": "Not Found",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -1212,7 +1212,7 @@
                     "400": {
                         "description": "Invalid request",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -1222,7 +1222,17 @@
                     "401": {
                         "description": "Authentication failed",
                         "content": {
-                            "application/problem+json": {
+                            "application/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "The user is set to invalid",
+                        "content": {
+                            "application/vnd.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ErrorResponse"
                                 }
@@ -1459,21 +1469,44 @@
             "ErrorResponse": {
                 "type": "object",
                 "required": [
-                    "status"
+                    "jsonapi",
+                    "errors"
                 ],
-                "description": "RFC 7807 problem document",
+                "description": "JSON:API error document",
                 "properties": {
-                    "title": {
-                        "type": "string",
-                        "example": "No access to this object!"
+                    "jsonapi": {
+                        "type": "object",
+                        "required": [
+                            "version"
+                        ],
+                        "properties": {
+                            "version": {
+                                "type": "string",
+                                "default": "1.1"
+                            }
+                        }
                     },
-                    "type": {
-                        "type": "string",
-                        "example": "about:blank"
-                    },
-                    "status": {
-                        "type": "integer",
-                        "example": 400
+                    "errors": {
+                        "type": "array",
+                        "maxItems": 1,
+                        "items": {
+                            "type": "object",
+                            "required": [
+                                "status",
+                                "title"
+                            ],
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "description": "The HTTP status code of the response, as a string",
+                                    "example": "400"
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "example": "No access to this object!"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1635,7 +1668,7 @@
                                 "type": "string",
                                 "default": "1.1"
                             },
-                            "ext": {
+                            "profile": {
                                 "type": "array",
                                 "items": {
                                     "type": "string"
@@ -2017,7 +2050,7 @@
                                 "type": "string",
                                 "default": "1.1"
                             },
-                            "ext": {
+                            "profile": {
                                 "type": "array",
                                 "items": {
                                     "type": "string"
@@ -2443,7 +2476,7 @@
                                 "type": "string",
                                 "default": "1.1"
                             },
-                            "ext": {
+                            "profile": {
                                 "type": "array",
                                 "items": {
                                     "type": "string"

@@ -44,22 +44,18 @@ rules:
         values:
           - object
 
-  # Two deviations are folded into this rule:
-  #   - Errors are RFC 7807 problem documents served as application/problem+json
-  #     by ErrorHandler::errorResponse, not JSON:API error documents, so only
-  #     success payloads are checked.
-  #   - Helper request bodies are flat maps of form fields read by
-  #     AbstractHelperAPI::processPost, not JSON:API documents, so request bodies
-  #     are only checked under /api/v2/ui/.
+  # Helper request bodies are flat maps of form fields read by
+  # AbstractHelperAPI::processPost, not JSON:API documents, so request bodies are
+  # only checked under /api/v2/ui/. Responses are checked everywhere, errors
+  # included: ErrorHandler::errorResponse answers JSON:API error documents.
   content-type:
-    description: "JSON:API payloads MUST use the `application/vnd.api+json` media type. Error
-      responses are excluded: the APIv2 answers those as RFC 7807 problem documents."
+    description: "JSON:API payloads MUST use the `application/vnd.api+json` media type."
     documentationUrl: "https://jsonapi.org/format/1.0/#content-negotiation"
     message: "content MUST be 'application/vnd.api+json'"
     severity: error
     given:
       - "$.paths[?(@property.match(/^\\/api\\/v2\\/ui\\//))]..requestBody.content"
-      - "$.paths..responses[?(@property >= '200' && @property < '300')].content"
+      - "$.paths..responses.*.content"
     then:
       field: "@key"
       function: enumeration
@@ -191,10 +187,9 @@ rules:
 overrides:
   # /api/v2/auth/token exchanges basic auth credentials for a JWT. It is not a
   # JSON:API resource endpoint: it takes a scope list and answers a plain
-  # application/json body (see token.routes.php).
+  # application/json body (see token.routes.php), which is the one media type
+  # the content-type rule cannot be satisfied with. The other rules hold for it.
   - files:
       - "**#/paths/~1api~1v2~1auth~1token"
     rules:
       content-type: off
-      400-response-code: off
-      403-response-code: off

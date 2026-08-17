@@ -1,5 +1,5 @@
 from hashtopolis import Task, TaskWrapper, Config, HashtopolisResponseError
-from utils import BaseTest, do_create_dummy_agent, do_create_agentassignent
+from utils import BaseTest, do_create_agentassignent, do_create_dummy_agent
 from hashtopolis_agent import ProcessState
 import base64
 

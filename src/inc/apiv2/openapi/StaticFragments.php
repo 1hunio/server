@@ -8,30 +8,45 @@ namespace Hashtopolis\inc\apiv2\openapi;
  * TUS importFile endpoint documentation.
  */
 class StaticFragments {
+  public function __construct(private JsonApiFragments $jsonApiFragments) {
+  }
+
   /**
    * The body of every error the APIv2 answers with: ErrorHandler::errorResponse
-   * renders an RFC 7807 problem document for all of them.
+   * renders a JSON:API error document for all of them, holding exactly one error
+   * object.
    */
   public function errorComponents(): array {
     $components = [];
     $components["ErrorResponse"] = [
       "type" => "object",
-      "required" => ["status"],
-      "description" => "RFC 7807 problem document",
-      "properties" => [
-        "title" => [
-          "type" => "string",
-          "example" => "No access to this object!"
-        ],
-        "type" => [
-          "type" => "string",
-          "example" => "about:blank"
-        ],
-        "status" => [
-          "type" => "integer",
-          "example" => 400
+      "required" => ["jsonapi", "errors"],
+      "description" => "JSON:API error document",
+      "properties" => array_merge(
+        $this->jsonApiFragments->makeJsonApiHeader([]),
+        [
+          "errors" => [
+            "type" => "array",
+            /* The APIv2 reports one error per response */
+            "maxItems" => 1,
+            "items" => [
+              "type" => "object",
+              "required" => ["status", "title"],
+              "properties" => [
+                "status" => [
+                  "type" => "string",
+                  "description" => "The HTTP status code of the response, as a string",
+                  "example" => "400"
+                ],
+                "title" => [
+                  "type" => "string",
+                  "example" => "No access to this object!"
+                ]
+              ]
+            ]
+          ]
         ]
-      ]
+      )
     ];
     return $components;
   }
@@ -68,8 +83,10 @@ class StaticFragments {
               ]
             ]
           ],
-          "400" => $this->problemResponse("Invalid request"),
-          "401" => $this->problemResponse("Authentication failed")
+          "400" => $this->errorResponse("Invalid request"),
+          "401" => $this->errorResponse("Authentication failed"),
+          /* generateTokenForUser refuses a user that is set to invalid */
+          "403" => $this->errorResponse("The user is set to invalid")
         ],
         "security" => [
           [
@@ -81,20 +98,11 @@ class StaticFragments {
   }
 
   /**
-   * Errors are rendered as RFC 7807 problem documents by
+   * Errors are rendered as JSON:API error documents by
    * ErrorHandler::errorResponse, on every APIv2 route.
    */
-  private function problemResponse(string $description): array {
-    return [
-      "description" => $description,
-      "content" => [
-        JsonApiFragments::PROBLEM_MEDIA_TYPE => [
-          "schema" => [
-            '$ref' => "#/components/schemas/ErrorResponse"
-          ]
-        ]
-      ]
-    ];
+  private function errorResponse(string $description): array {
+    return $this->jsonApiFragments->errorResponse($description);
   }
 
   public function tokenComponents(): array {

@@ -267,7 +267,7 @@ class ModelApiPathBuilder {
     }
     if ($singleObject) {
       /* Single objects could not exists */
-      $paths[$path][$method]["responses"]["404"] = $this->jsonApiFragments->problemResponse("Not Found");
+      $paths[$path][$method]["responses"]["404"] = $this->jsonApiFragments->errorResponse("Not Found");
 
       /* Method specific responses and requests for single objects */
       if ($method == 'get') {
@@ -299,7 +299,7 @@ class ModelApiPathBuilder {
       }
       elseif ($method == 'patch') {
         /* A rename can collide with an existing object */
-        $paths[$path][$method]["responses"]["409"] = $this->jsonApiFragments->problemResponse("Resource already exists");
+        $paths[$path][$method]["responses"]["409"] = $this->jsonApiFragments->errorResponse("Resource already exists");
 
         if ($isRelation) {
           $paths[$path][$method]["requestBody"] = $this->jsonApiFragments->jsonApiRequestBody(
@@ -334,7 +334,7 @@ class ModelApiPathBuilder {
           "description" => "successfully created",
         ];
         /* Linking a relation that already exists is a conflict */
-        $paths[$path][$method]["responses"]["409"] = $this->jsonApiFragments->problemResponse("Resource already exists");
+        $paths[$path][$method]["responses"]["409"] = $this->jsonApiFragments->errorResponse("Resource already exists");
 
         /* The resource identifiers to link are sent as data */
         $paths[$path][$method]["requestBody"] = $this->jsonApiFragments->jsonApiRequestBody(
@@ -377,7 +377,7 @@ class ModelApiPathBuilder {
           "#/components/schemas/" . $name . "PostPatchResponse"
         );
         /* Creating an object whose unique attributes are taken is a conflict */
-        $paths[$path][$method]["responses"]["409"] = $this->jsonApiFragments->problemResponse("Resource already exists");
+        $paths[$path][$method]["responses"]["409"] = $this->jsonApiFragments->errorResponse("Resource already exists");
 
         if ($isRelation) {
           $paths[$path][$method]["requestBody"] = $this->jsonApiFragments->jsonApiRequestBody(
@@ -399,8 +399,8 @@ class ModelApiPathBuilder {
         $paths[$path][$method]["responses"]["204"] = [
           "description" => "successfully updated",
         ];
-        $paths[$path][$method]["responses"]["404"] = $this->jsonApiFragments->problemResponse("Not Found");
-        $paths[$path][$method]["responses"]["409"] = $this->jsonApiFragments->problemResponse("Resource already exists");
+        $paths[$path][$method]["responses"]["404"] = $this->jsonApiFragments->errorResponse("Not Found");
+        $paths[$path][$method]["responses"]["409"] = $this->jsonApiFragments->errorResponse("Resource already exists");
         $paths[$path][$method]["requestBody"] = $this->jsonApiFragments->jsonApiRequestBody(
           "#/components/schemas/" . $name . "PatchMultiple"
         );
@@ -413,7 +413,7 @@ class ModelApiPathBuilder {
         $paths[$path][$method]["responses"]["204"] = [
           "description" => "successfully deleted",
         ];
-        $paths[$path][$method]["responses"]["404"] = $this->jsonApiFragments->problemResponse("Not Found");
+        $paths[$path][$method]["responses"]["404"] = $this->jsonApiFragments->errorResponse("Not Found");
         $paths[$path][$method]["requestBody"] = $this->jsonApiFragments->jsonApiRequestBody(
           "#/components/schemas/" . $name . "DeleteMultiple"
         );
