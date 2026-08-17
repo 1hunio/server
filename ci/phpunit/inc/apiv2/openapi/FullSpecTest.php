@@ -262,6 +262,22 @@ final class FullSpecTest extends TestCase {
   }
 
   /**
+   * JSON:API requires the top level meta member to be an object, so no document
+   * may describe it as anything else (AbstractBaseAPI::getMetaResponse).
+   */
+  public function testTopLevelMetaIsAlwaysAnObject(): void {
+    $checked = 0;
+    foreach (self::$sanitized['components']['schemas'] as $name => $schema) {
+      if (!isset($schema['properties']['meta'])) {
+        continue;
+      }
+      $this->assertSame('object', $schema['properties']['meta']['type'], $name);
+      $checked++;
+    }
+    $this->assertGreaterThan(0, $checked);
+  }
+
+  /**
    * A single object PATCH carries the id of the object it updates, which
    * AbstractModelAPI::patchSingleObject requires and JSON:API mandates.
    */

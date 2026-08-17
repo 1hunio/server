@@ -74402,113 +74402,118 @@
                         }
                     },
                     "meta": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "found": {
-                                    "type": "boolean",
-                                    "example": true
-                                },
-                                "query": {
-                                    "type": "string",
-                                    "example": "54321"
-                                },
-                                "matches": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "type": {
-                                                "type": "string",
-                                                "example": "hash"
-                                            },
-                                            "id": {
-                                                "type": "string",
-                                                "example": "1"
-                                            },
-                                            "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "results": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "found": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "query": {
+                                            "type": "string",
+                                            "example": "54321"
+                                        },
+                                        "matches": {
+                                            "type": "array",
+                                            "items": {
                                                 "type": "object",
                                                 "properties": {
-                                                    "hashlistId": {
+                                                    "type": {
                                                         "type": "string",
-                                                        "example": "5"
+                                                        "example": "hash"
                                                     },
-                                                    "hash": {
+                                                    "id": {
                                                         "type": "string",
-                                                        "example": "54321768671"
+                                                        "example": "1"
                                                     },
-                                                    "salt": {
-                                                        "type": "string",
-                                                        "example": ""
-                                                    },
-                                                    "plaintext": {
-                                                        "type": "string",
-                                                        "example": ""
-                                                    },
-                                                    "timeCracked": {
-                                                        "type": "integer",
-                                                        "example": 0
-                                                    },
-                                                    "chunkId": {
-                                                        "type": [
-                                                            "string",
-                                                            "null"
-                                                        ]
-                                                    },
-                                                    "isCracked": {
-                                                        "type": "boolean",
-                                                        "example": false
-                                                    },
-                                                    "crackPos": {
-                                                        "type": "integer",
-                                                        "example": 0
-                                                    }
-                                                }
-                                            },
-                                            "links": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "self": {
-                                                        "type": "string",
-                                                        "example": "/api/v2/ui/hashes/1"
-                                                    }
-                                                }
-                                            },
-                                            "relationships": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "chunk": {
+                                                    "attributes": {
                                                         "type": "object",
                                                         "properties": {
-                                                            "links": {
-                                                                "type": "object",
-                                                                "properties": {
-                                                                    "self": {
-                                                                        "type": "string",
-                                                                        "example": "/api/v2/ui/hashes/1/relationships/chunk"
-                                                                    },
-                                                                    "related": {
-                                                                        "type": "string",
-                                                                        "example": "/api/v2/ui/hashes/1/chunk"
-                                                                    }
-                                                                }
+                                                            "hashlistId": {
+                                                                "type": "string",
+                                                                "example": "5"
+                                                            },
+                                                            "hash": {
+                                                                "type": "string",
+                                                                "example": "54321768671"
+                                                            },
+                                                            "salt": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "plaintext": {
+                                                                "type": "string",
+                                                                "example": ""
+                                                            },
+                                                            "timeCracked": {
+                                                                "type": "integer",
+                                                                "example": 0
+                                                            },
+                                                            "chunkId": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "isCracked": {
+                                                                "type": "boolean",
+                                                                "example": false
+                                                            },
+                                                            "crackPos": {
+                                                                "type": "integer",
+                                                                "example": 0
                                                             }
                                                         }
                                                     },
-                                                    "hashlist": {
+                                                    "links": {
                                                         "type": "object",
                                                         "properties": {
-                                                            "links": {
+                                                            "self": {
+                                                                "type": "string",
+                                                                "example": "/api/v2/ui/hashes/1"
+                                                            }
+                                                        }
+                                                    },
+                                                    "relationships": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "chunk": {
                                                                 "type": "object",
                                                                 "properties": {
-                                                                    "self": {
-                                                                        "type": "string",
-                                                                        "example": "/api/v2/ui/hashes/1/relationships/hashlist"
-                                                                    },
-                                                                    "related": {
-                                                                        "type": "string",
-                                                                        "example": "/api/v2/ui/hashes/1/hashlist"
+                                                                    "links": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "self": {
+                                                                                "type": "string",
+                                                                                "example": "/api/v2/ui/hashes/1/relationships/chunk"
+                                                                            },
+                                                                            "related": {
+                                                                                "type": "string",
+                                                                                "example": "/api/v2/ui/hashes/1/chunk"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "hashlist": {
+                                                                "type": "object",
+                                                                "properties": {
+                                                                    "links": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "self": {
+                                                                                "type": "string",
+                                                                                "example": "/api/v2/ui/hashes/1/relationships/hashlist"
+                                                                            },
+                                                                            "related": {
+                                                                                "type": "string",
+                                                                                "example": "/api/v2/ui/hashes/1/hashlist"
+                                                                            }
+                                                                        }
                                                                     }
                                                                 }
                                                             }

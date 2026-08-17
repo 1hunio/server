@@ -21,24 +21,6 @@ extends:
   - ./spectral-jsonapi.yml
 
 rules:
-  # SearchHashesHelperAPI answers a bare list of per-query results, which
-  # getMetaResponse puts under the top level "meta", so that one document has an
-  # array where JSON:API requires an object. Every other path is still checked.
-  # Restore the upstream given once the helper answers the list under a member.
-  meta-object:
-    description: "`meta` property MUST be of type `object`. /api/v2/helper/searchHashes is excluded:
-      it answers a bare list of per-query results."
-    documentationUrl: "https://jsonapi.org/format/1.0/#document-meta"
-    message: "'meta' property MUST be of type object"
-    severity: error
-    given: "$.paths[?(!@property.match(/searchHashes/))]..content['application/vnd.api+json'].schema..properties[meta]"
-    then:
-      field: type
-      function: enumeration
-      functionOptions:
-        values:
-          - object
-
   # Two deviations are folded into this rule:
   #   - Helper request bodies are flat maps of form fields read by
   #     AbstractHelperAPI::processPost, not JSON:API documents, so request bodies

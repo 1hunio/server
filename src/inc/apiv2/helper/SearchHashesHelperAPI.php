@@ -41,6 +41,7 @@ class SearchHashesHelperAPI extends AbstractHelperAPI {
   
   public static function getResponse(): array {
     return [
+      "results" => [
       ["found" => false,
        "query" => "12345678",
       ],
@@ -109,7 +110,8 @@ class SearchHashesHelperAPI extends AbstractHelperAPI {
                        ]
                      ],
        ],
-      ]
+      ],
+      ],
     ];
   }
   
@@ -205,6 +207,6 @@ class SearchHashesHelperAPI extends AbstractHelperAPI {
       }
       $resultEntries[] = $resultEntry;
     }
-    return $resultEntries;
+    return ["results" => $resultEntries];
   }
 }
